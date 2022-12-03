@@ -2,10 +2,10 @@
 # AUTHOR        : Johan van der Merwe
 # CREATE DATE   : 03 Dec 2022
 # PURPOSE       : For Advent of code
-# SPECIAL NOTES : Contains final code for part 2 of day 3
+# SPECIAL NOTES : Contains final code for part 1 & 2 of day 3
 # ===============================
 # Change History:
-# -
+# - reformatted orders and cleaned up slice & correct notes (03 Dec 2022)
 # ==================================
 
 import os
@@ -29,9 +29,9 @@ def get_char_prio(c:chr):
         return ord(c) - 38
 
 
+group = []
 sum_priorities = 0
 sum_group_priorities = 0
-group = []
 
 with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 3\\puzzle input.txt") as f):
     for line in f.readlines():
@@ -39,7 +39,7 @@ with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 3\\puzzle input.txt") as f):
                 
         # Part 1
         # Split into 2 compartments
-        p1 = line[0:len(line)//2]
+        p1 = line[:len(line)//2]
         p2 = line[len(line)//2:]
         # Check the compartments
         for c in p1:
