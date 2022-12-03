@@ -5,7 +5,7 @@
 # SPECIAL NOTES : Contains final code for part 2 of day 2
 # ===============================
 # Change History:
-# -
+# - Reformatted dicts (03 Dec 2022)
 # ==================================
 
 import os
@@ -40,9 +40,16 @@ def play_game(in1, in2):
 
 
 def decode_game(es:str):
-        INDEX1 = {'A': 'Rock', 'B': 'Paper', 'C': 'Scissors'}
-        INDEX2 = {'X': 'Lose', 'Y': 'Draw', 'Z': 'Win'}
-
+        INDEX1 = {
+            'A': 'Rock',
+            'B': 'Paper',
+            'C': 'Scissors'
+            }
+        INDEX2 = {
+            'X': 'Lose',
+            'Y': 'Draw',
+            'Z': 'Win'
+            }
         return play_game(INDEX2[es[2]], INDEX1[es[0]])
 
 
