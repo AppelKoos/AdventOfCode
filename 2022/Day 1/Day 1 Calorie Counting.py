@@ -2,10 +2,10 @@
 # AUTHOR        : Johan van der Merwe
 # CREATE DATE   : 01 Dec 2022
 # PURPOSE       : For Advent of code
-# SPECIAL NOTES : Contains final code for part 2 of day 1
+# SPECIAL NOTES : Contains final code for part 1 & 2 of day 1
 # ===============================
 # Change History:
-# -
+# - Fixed notes (03 Dec 2022)
 # ==================================
 
 import os
