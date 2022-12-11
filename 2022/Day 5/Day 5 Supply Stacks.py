@@ -9,6 +9,7 @@
 # ==================================
 
 import os
+import re
 import sys
 from dotenv import load_dotenv
 
@@ -45,10 +46,39 @@ def build_stacks(inlist:list):
     return outlist
 
 
+# Read in the stacks
+stacks = []
 with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 5\\Puzzle input.txt") as f):
-    stacks = []
     for line in f.readlines()[:9]:
         stacks.append(slb(line))
 
-    print(build_stacks(stacks))
-    
+    stacks = build_stacks(stacks)
+
+# Read in the procedures
+stack_procedures = []
+with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 5\\Puzzle input.txt") as f):
+    for line in f.readlines()[10:]:
+        stack_procedures.append(slb(line))
+
+for procedure in stack_procedures:
+    # print(procedure)
+    action_list = re.findall(r'\d+', procedure)
+
+    movee = int(action_list[0])
+    froml = int(action_list[1]) - 1
+    tol = int(action_list[2]) - 1
+
+    if len(stacks[froml]) < movee:
+        print('from list to short')
+    else:
+        for e in reversed(stacks[froml]):
+            if movee <= 0:
+                break
+            stacks[tol].append(e)
+            stacks[froml].pop()
+            movee -= 1
+
+outs = ''
+for crate in stacks:
+    outs += f'{crate[-1]}'
+print(f'The top crates in each stack is: {outs}')
