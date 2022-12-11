@@ -46,6 +46,60 @@ def build_stacks(inlist:list):
     return outlist
 
 
+def perform_procedure(stack_list:list, action_list:list):
+    for procedure in action_list:
+        action_list = re.findall(r'\d+', procedure)
+
+        movee = int(action_list[0])
+        froml = int(action_list[1]) - 1
+        tol = int(action_list[2]) - 1
+        print(movee)
+        print(f'--from {stack_list[froml]}')
+        print(f'--to {stack_list[tol]}')
+
+        if len(stack_list[froml]) < movee:
+            print('----------------from list to short----------------')
+            print(f'tried the following: {action_list} from {stack_list[froml]} to {stack_list[tol]}')
+        else:
+            # Incorrect guess 1 DLFGJDJZW
+            # Incorrect guess 1 DLFGQWTZW
+            if movee == 1:
+                for e in reversed(stack_list[froml]):
+                    print(movee)
+                    print(f'%%from {stack_list[froml]}')
+                    print(f'%%to {stack_list[tol]}')
+                    if movee <= 0:
+                        print(f'%%from {stack_list[froml]}')
+                        print(f'%%to {stack_list[tol]}')
+                        break
+                    stack_list[tol].append(e)
+                    stack_list[froml].pop()
+                    movee -= 1
+            else:
+                _ = []
+                for e in reversed(stack_list[froml]):
+                    print(movee)
+                    print(f'%%from {stack_list[froml]}')
+                    print(f'%%to {stack_list[tol]}')
+                    if movee <= 0:
+                        for i in reversed(_):
+                            stack_list[tol].append(i)
+                        print(f'%%from {stack_list[froml]}')
+                        print(f'%%to {stack_list[tol]}')
+                        break
+                    _.append(e)
+                    stack_list[froml].pop()
+                    movee -= 1
+    return stack_list
+
+
+def print_result(inlist:list):
+    _ = ''
+    for crate in inlist:
+        _ += f'{crate[-1]}'
+    print(f'The top crates in each stack is: {_}')
+
+
 # Read in the stacks
 stacks = []
 with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 5\\Puzzle input.txt") as f):
@@ -60,25 +114,8 @@ with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 5\\Puzzle input.txt") as f):
     for line in f.readlines()[10:]:
         stack_procedures.append(slb(line))
 
-for procedure in stack_procedures:
-    # print(procedure)
-    action_list = re.findall(r'\d+', procedure)
+# Perform procedure
+stacks = perform_procedure(stacks, stack_procedures)
 
-    movee = int(action_list[0])
-    froml = int(action_list[1]) - 1
-    tol = int(action_list[2]) - 1
-
-    if len(stacks[froml]) < movee:
-        print('from list to short')
-    else:
-        for e in reversed(stacks[froml]):
-            if movee <= 0:
-                break
-            stacks[tol].append(e)
-            stacks[froml].pop()
-            movee -= 1
-
-outs = ''
-for crate in stacks:
-    outs += f'{crate[-1]}'
-print(f'The top crates in each stack is: {outs}')
+# Print result
+print_result(stacks)
