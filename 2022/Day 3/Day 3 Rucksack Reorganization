@@ -1,0 +1,61 @@
+# ===============================
+# AUTHOR        : Johan van der Merwe
+# CREATE DATE   : 03 Dec 2022
+# PURPOSE       : For Advent of code
+# SPECIAL NOTES : Contains final code for part 1 & 2 of day 3
+# ===============================
+# Change History:
+# - reformatted orders and cleaned up slice & correct notes (03 Dec 2022)
+# ==================================
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+HOME_DIR = os.getenv("HOME_DIR")
+
+def strip_linebreak(l:str):
+    if l[-1] == '\n':
+        l = l[:-1]
+    return l
+
+
+def get_char_prio(c:chr):
+    if c > 'a':
+        # a 97 -> 1  (-96)
+        return ord(c) - 96
+    else:
+        # A 65 -> 27 (-38)
+        return ord(c) - 38
+
+
+group = []
+sum_priorities = 0
+sum_group_priorities = 0
+
+with (open(f"{HOME_DIR}AdventOfCode\\2022\\Day 3\\puzzle input.txt") as f):
+    for line in f.readlines():
+        line = strip_linebreak(line)
+                
+        # Part 1
+        # Split into 2 compartments
+        p1 = line[:len(line)//2]
+        p2 = line[len(line)//2:]
+        # Check the compartments
+        for c in p1:
+            if c in p2:
+                sum_priorities += get_char_prio(c)
+        
+        # Part 2
+        # Build a group
+        group.append(line)
+        if len(group) > 2:
+            # Check the group
+            for c in group[0]:
+                if c in group[1] and c in group[2]:
+                    sum_group_priorities += get_char_prio(c)
+                    group = []
+                    break
+        
+    print(f'p1: {sum_priorities}')
+    print(f'p2: {sum_group_priorities}')
